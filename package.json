@@ -4,7 +4,8 @@
   "description": "Este documento explica cómo iniciar un proyecto web desde cero utilizando Webpack, Babel y otras herramientas para la construcción y el desarrollo.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
