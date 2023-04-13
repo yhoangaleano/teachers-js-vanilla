@@ -15,6 +15,7 @@ module.exports = (env, argv) => {
     return {
         entry: {
             index: './src/index.js',
+            styles: './src/styles.js'
         },
         output: {
             filename: '[name].[contenthash].js',
@@ -44,7 +45,7 @@ module.exports = (env, argv) => {
         plugins: [
             new HtmlWebpackPlugin({
                 template: './src/index.html',
-                chunks: ['index']
+                chunks: ['index', 'styles']
             }),
             // averiguar que significa un spread operator
             ...(isProduction ? [new MiniCssExtractPlugin({ filename: 'assets/css/[name].[contenthash].css' })] : [])
