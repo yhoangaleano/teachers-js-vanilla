@@ -11,14 +11,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
-    // operadores en javascript, que diferencia existe entre el operador == y el ===
     const isProduction = argv.mode === 'production';
     return {
         entry: {
             index: './src/index.js',
         },
         output: {
-            filename: '[name].js',
+            filename: '[name].[contenthash].js',
             path: path.resolve(__dirname, 'dist')
         },
         module: {
@@ -42,7 +41,14 @@ module.exports = (env, argv) => {
                 }
             ]
         },
-        plugins: [],
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: './src/index.html',
+                chunks: ['index']
+            }),
+            // averiguar que significa un spread operator
+            ...(isProduction ? [new MiniCssExtractPlugin({ filename: 'assets/css/[name].[contenthash].css' })] : [])
+        ],
         devServer: {
             static: {
                 directory: path.join(__dirname, 'dist'),
@@ -55,22 +61,3 @@ module.exports = (env, argv) => {
         }
     };
 }
-
-
-// const name = 'yhoan';
-
-// if (name == 'yhoana') {
-//     console.log('La persona si se llama yhoana');
-// } else {
-//     console.log('La persona no se llama yhoana');
-// }
-
-// // If ternario
-// console.log(name == 'yhoana' ? 'La persona si se llama yhoana' : 'La persona no se llama yhoana');
-
-
-
-// console.log('La persona ' + name == 'yhoana' ? 'si' : 'no' + ' se llama yhoana');
-
-// // Template literals
-// console.log(`La persona ${name == 'yhoana' ? 'si' : 'no'} se llama yhoana`);
