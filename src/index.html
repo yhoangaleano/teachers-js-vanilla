@@ -17,15 +17,49 @@
 
         <section class="row text-center">
             <article class="col-xs-12 col-md-6">
-                
-                <img src="./assets/img/teachers.jpg" alt="Profesores">
+
+                <img class="img-fluid rounded" src="./assets/img/teachers.jpg" alt="Profesores">
 
             </article>
             <article class="col-xs-12 col-md-6">
-                Formulario
+
+                <form novalidate class="form-floating" id="teacherForm">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtName" name="txtName" class="form-control" placeholder="Ejm: Yhoan">
+                        <label for="txtName">Nombre</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea name="txtDescription" id="txtDescription" cols="30" rows="10" class="form-control"></textarea>
+                        <label for="txtDescription">Descripción</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" id="txtEmail" name="txtEmail" class="form-control" placeholder="Ejm: yhoan@gmail.com">
+                        <label for="txtEmail">Correo electrónico</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="date" id="txtBirthDate" name="txtBirthDate" class="form-control" placeholder="Ejm: 05/07/1993">
+                        <label for="txtBirthDate">Fecha de nacimiento</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="d-grid col-md-6">
+                            <button type="reset" id="btnCancel" class="btn btn-secondary">Cancelar</button>
+                        </div>
+                        <div class="d-grid col-md-6">
+                            <button type="submit" id="btnSubmit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </div>
+
+                </form>
+
             </article>
         </section>
-        <section class="row">
+
+        <section class="row mt-3">
 
             <div class="col-12">
 
