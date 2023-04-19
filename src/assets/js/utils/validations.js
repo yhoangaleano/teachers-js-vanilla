@@ -1,0 +1,1 @@
+// Utilidad para realizar validaciones con js
