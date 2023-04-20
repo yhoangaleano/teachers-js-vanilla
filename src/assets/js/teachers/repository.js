@@ -9,3 +9,6 @@ export function createTeacher(teacher) {
     setDatabase(dbName, arrayTeachers);
 }
 
+export function readTeachers() {
+    return getDatabase(dbName);
+}
