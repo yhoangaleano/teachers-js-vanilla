@@ -14,6 +14,10 @@ export const formElements = {
 };
 
 export function getFormData() {
+    /**
+     * const formData = new FormData(formElements.form);
+     * return Object.fromEntries(formData.entries());
+     */
     const teacher = {
         name: formElements.fields.name.value,
         description: formElements.fields.description.value,
