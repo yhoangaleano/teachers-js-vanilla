@@ -23,26 +23,55 @@ function listTeachers() {
     tbody.innerHTML = '';
 
     arrayTeachers.forEach((teacher, index) => {
+
+        const { name, description, email, birthDate } = teacher;
+
         // Creo la fila
         const row = document.createElement('tr');
+        row.classList.add('align-middle');
 
         // Creo las columnas
         const colId = document.createElement('td');
         colId.textContent = index;
-        
+        colId.classList.add('text-center');
+
         const colName = document.createElement('td');
-        colName.textContent = teacher.name;
-        
+        colName.textContent = name;
+
         const colDescription = document.createElement('td');
-        colDescription.textContent = teacher.description;
-        
+        colDescription.textContent = description;
+
         const colEmail = document.createElement('td');
-        colEmail.textContent = teacher.email;
-        
+        colEmail.textContent = email;
+
         const colBirthDate = document.createElement('td');
-        colBirthDate.textContent = teacher.birthDate;
+        colBirthDate.textContent = birthDate;
 
         const colButtons = document.createElement('td');
+        colButtons.classList.add('text-center');
+
+        const editButton = document.createElement('button');
+        editButton.classList.add('btn', 'btn-primary', 'btn-edit', 'm-1');
+        editButton.dataset.id = index;
+        editButton.setAttribute('title', 'Editar');
+
+        const editIcon = document.createElement('em');
+        editIcon.classList.add('fa', 'fa-pencil');
+        editButton.appendChild(editIcon);
+
+        colButtons.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-danger', 'btn-delete', 'm-1');
+        deleteButton.dataset.id = index;
+        deleteButton.setAttribute('title', 'Eliminar');
+
+        const deleteIcon = document.createElement('em');
+        deleteIcon.classList.add('fa', 'fa-trash');
+        deleteButton.appendChild(deleteIcon);
+
+        colButtons.appendChild(deleteButton);
+
 
         // Agrego las columnas a la fila
         row.appendChild(colId);
