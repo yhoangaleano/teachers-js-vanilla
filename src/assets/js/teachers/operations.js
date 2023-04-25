@@ -1,7 +1,12 @@
 // Encargado de la interacción de js con html
+// Third Libraries
 import alertify from 'alertifyjs';
 
-import { formElements, getFormData, resetForm } from './form';
+// Own Libraries
+import { validateForm } from './../utils/validations';
+
+// Module Libraries
+import { formElements, fieldConfigurations, getFormData, resetForm } from './form';
 import { createTeacher, readTeachers } from './repository';
 
 export function listeners() {
@@ -14,10 +19,16 @@ export function listeners() {
 function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
-        createTeacher(getFormData());
-        resetForm();
-        alertify.success('Profesor guardado correctamente');
-        listTeachers();
+
+        if (validateForm(fieldConfigurations)) {
+            createTeacher(getFormData());
+            resetForm();
+            alertify.success('Profesor guardado correctamente');
+            listTeachers();
+        } else {
+            alertify.error('Verificar los datos del formulario');
+        }
+
     });
 }
 
