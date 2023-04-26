@@ -56,6 +56,13 @@ export const fieldConfigurations = [
                 validationFunction: (value) => {
                     return value.trim() !== '';
                 }
+            },
+            {
+                errorId: `${formElements.fields.email.id}Pattern`, //Template literals
+                errorMessage: "El correo electrónico no cumple con el formato correcto.",
+                validationFunction: (value) => {
+                    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);
+                }
             }
         ]
     },
