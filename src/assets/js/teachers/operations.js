@@ -3,7 +3,7 @@
 import alertify from 'alertifyjs';
 
 // Own Libraries
-import { validateForm } from './../utils/validations';
+import { validateForm, validateField, removeInputErrorMessage } from './../utils/validations';
 import { createEmptyRow, createActionButton } from './../utils/table';
 
 // Module Libraries
@@ -14,13 +14,14 @@ export function listeners() {
     window.addEventListener('load', () => {
         listenFormSubmitEvent();
         listTeachers();
+        listenFormFieldsChangeEvent();
     });
 }
 
 function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
-
+        alertify.dismissAll();
         if (validateForm(fieldConfigurations)) {
             createTeacher(getFormData());
             resetForm();
@@ -106,3 +107,26 @@ function listTeachers() {
     }
 }
 
+function listenFormFieldsChangeEvent() {
+
+    fieldConfigurations.forEach(({ input, validations }) => {
+
+        input.addEventListener('change', () => {
+
+            removeInputErrorMessage(input);
+
+            console.log(input.value);
+
+            validations.forEach((validationConfig) => {
+
+                validateField(input, validationConfig);
+
+                console.log('Entre a validar');
+
+            });
+
+        })
+
+    });
+
+}
