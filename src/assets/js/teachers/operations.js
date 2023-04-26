@@ -3,7 +3,7 @@
 import alertify from 'alertifyjs';
 
 // Own Libraries
-import { validateForm, validateField, removeInputErrorMessage } from './../utils/validations';
+import { validateForm, validateField, removeInputErrorMessage, removeErrorClassNameFields, removeErrorMessageElements } from './../utils/validations';
 import { createEmptyRow, createActionButton } from './../utils/table';
 
 // Module Libraries
@@ -15,6 +15,7 @@ export function listeners() {
         listenFormSubmitEvent();
         listTeachers();
         listenFormFieldsChangeEvent();
+        listenFormResetEvent();
     });
 }
 
@@ -25,6 +26,7 @@ function listenFormSubmitEvent() {
         if (validateForm(fieldConfigurations)) {
             createTeacher(getFormData());
             resetForm();
+            removeErrorClassNameFields('is-valid');
             alertify.success('Profesor guardado correctamente');
             listTeachers();
         } else {
@@ -108,25 +110,21 @@ function listTeachers() {
 }
 
 function listenFormFieldsChangeEvent() {
-
     fieldConfigurations.forEach(({ input, validations }) => {
-
         input.addEventListener('change', () => {
-
             removeInputErrorMessage(input);
-
-            console.log(input.value);
-
             validations.forEach((validationConfig) => {
-
                 validateField(input, validationConfig);
-
-                console.log('Entre a validar');
-
             });
-
         })
-
     });
+}
 
+function listenFormResetEvent() {
+    formElements.form.addEventListener('reset', () => {
+        removeErrorMessageElements();
+        removeErrorClassNameFields('is-valid');
+        resetForm();
+        alertify.dismissAll();
+    });
 }
