@@ -1,14 +1,15 @@
 // Encargado de la interacción de js con html
 // Third Libraries
 import alertify from 'alertifyjs';
+import Swal from 'sweetalert2';
 
 // Own Libraries
 import { validateForm, validateField, removeInputErrorMessage, removeErrorClassNameFields, removeErrorMessageElements } from './../utils/validations';
 import { createEmptyRow, createActionButton } from './../utils/table';
 
 // Module Libraries
-import { formElements, fieldConfigurations, getFormData, resetForm } from './form';
-import { createTeacher, readTeachers } from './repository';
+import { formElements, fieldConfigurations, getFormData, resetForm, setFormData } from './form';
+import { createTeacher, readTeachers, findTeacherById } from './repository';
 
 export function listeners() {
     window.addEventListener('load', () => {
@@ -16,6 +17,7 @@ export function listeners() {
         listTeachers();
         listenFormFieldsChangeEvent();
         listenFormResetEvent();
+        listenTableClickEvent();
     });
 }
 
@@ -78,6 +80,7 @@ function listTeachers() {
                 icon: 'fa-pencil',
                 dataId: id
             });
+
             colButtons.appendChild(editButton);
 
             const deleteButton = createActionButton({
@@ -127,4 +130,54 @@ function listenFormResetEvent() {
         resetForm();
         alertify.dismissAll();
     });
+}
+
+function listenTableClickEvent() {
+    const table = document.getElementById('tblTeachers');
+    table.addEventListener('click', ({ target }) => {
+
+        const idTeacher = target.getAttribute('data-id');
+
+        if (target.classList.contains('btn-edit') || target.classList.contains('fa-pencil')) {
+
+            editTeacher(idTeacher);
+
+        } else if (target.classList.contains('btn-delete') || target.classList.contains('fa-trash')) {
+
+            Swal.fire({
+                title: '¿Estas seguro de que quieres eliminar el profesor: ?',
+                text: 'No podrás deshacer esta acción',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#b2b2b2',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'Cerrar'
+            }).then((resultConfirm) => {
+
+                if (resultConfirm.isConfirmed) {
+
+                    console.log('Confirmar que elimina');
+
+                } else {
+                    alertify.dismissAll();
+                    alertify.message('Acción cancelada');
+                }
+
+            })
+
+        }
+
+    });
+}
+
+function editTeacher(idTeacher) {
+    const teacher = findTeacherById(idTeacher);
+
+    if (teacher) {
+        setFormData(teacher);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        alertify.error('El profesor que seleccionaste no existe, verifique la información.')
+    }
 }

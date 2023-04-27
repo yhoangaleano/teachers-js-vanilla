@@ -99,3 +99,13 @@ export function getFormData() {
 export function resetForm() {
     formElements.form.reset();
 }
+
+export function setFormData(teacher) {
+
+    const { id, name, description, email, birthDate } = teacher;
+    formElements.fields.name.value = name;
+    formElements.fields.description.value = description;
+    formElements.fields.email.value = email;
+    formElements.fields.birthDate.value = birthDate;
+
+}
